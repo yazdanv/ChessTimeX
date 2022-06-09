@@ -15,13 +15,17 @@ class GameViewModel: ObservableObject {
     var firstPlayerTimer: GameTimerProtocol?
     var secondPlayerTimer: GameTimerProtocol?
     
+    var subscriptions = Set<AnyCancellable>()
+    
     @Published var isPlaying = false
     @Published var firstPlayersTurn = true
     @Published var firstPlayerShowTime = "00:05:00"
     @Published var secondPlayerShowTime = "00:05:00"
     
     init() {
-
+        $isPlaying.sink(receiveValue: { _isPlaying in
+                
+        }).store(in: &subscriptions)
     }
     
 }
