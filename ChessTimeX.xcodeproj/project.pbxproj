@@ -8,12 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		E79779D228527768003C1870 /* ChessTimeXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79779D128527768003C1870 /* ChessTimeXApp.swift */; };
-		E79779D428527768003C1870 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79779D328527768003C1870 /* ContentView.swift */; };
+		E79779D428527768003C1870 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79779D328527768003C1870 /* GameView.swift */; };
 		E79779D62852776A003C1870 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E79779D52852776A003C1870 /* Assets.xcassets */; };
 		E79779D92852776A003C1870 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E79779D82852776A003C1870 /* Preview Assets.xcassets */; };
 		E79779E32852776A003C1870 /* ChessTimeXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79779E22852776A003C1870 /* ChessTimeXTests.swift */; };
 		E79779ED2852776A003C1870 /* ChessTimeXUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79779EC2852776A003C1870 /* ChessTimeXUITests.swift */; };
 		E79779EF2852776A003C1870 /* ChessTimeXUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79779EE2852776A003C1870 /* ChessTimeXUITestsLaunchTests.swift */; };
+		E79779FE285277A8003C1870 /* GameType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79779FD285277A7003C1870 /* GameType.swift */; };
+		E7977A00285278A3003C1870 /* GameRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79779FF285278A3003C1870 /* GameRule.swift */; };
+		E7977A0228527982003C1870 /* IncrementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A0128527982003C1870 /* IncrementType.swift */; };
+		E7977A0428527BD4003C1870 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A0328527BD4003C1870 /* GameViewModel.swift */; };
+		E7977A0C28527C9A003C1870 /* GameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A0B28527C9A003C1870 /* GameProtocol.swift */; };
+		E7977A0E28527E41003C1870 /* GameTimerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A0D28527E41003C1870 /* GameTimerProtocol.swift */; };
+		E7977A1128527F08003C1870 /* GameTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A1028527F08003C1870 /* GameTimer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +43,7 @@
 /* Begin PBXFileReference section */
 		E79779CE28527768003C1870 /* ChessTimeX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessTimeX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E79779D128527768003C1870 /* ChessTimeXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessTimeXApp.swift; sourceTree = "<group>"; };
-		E79779D328527768003C1870 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E79779D328527768003C1870 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		E79779D52852776A003C1870 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E79779D82852776A003C1870 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E79779DE2852776A003C1870 /* ChessTimeXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChessTimeXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,6 +51,13 @@
 		E79779E82852776A003C1870 /* ChessTimeXUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChessTimeXUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E79779EC2852776A003C1870 /* ChessTimeXUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessTimeXUITests.swift; sourceTree = "<group>"; };
 		E79779EE2852776A003C1870 /* ChessTimeXUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessTimeXUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E79779FD285277A7003C1870 /* GameType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameType.swift; sourceTree = "<group>"; };
+		E79779FF285278A3003C1870 /* GameRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRule.swift; sourceTree = "<group>"; };
+		E7977A0128527982003C1870 /* IncrementType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncrementType.swift; sourceTree = "<group>"; };
+		E7977A0328527BD4003C1870 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		E7977A0B28527C9A003C1870 /* GameProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameProtocol.swift; sourceTree = "<group>"; };
+		E7977A0D28527E41003C1870 /* GameTimerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimerProtocol.swift; sourceTree = "<group>"; };
+		E7977A1028527F08003C1870 /* GameTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,8 +108,10 @@
 		E79779D028527768003C1870 /* ChessTimeX */ = {
 			isa = PBXGroup;
 			children = (
+				E79779FB28527783003C1870 /* View */,
+				E79779FC2852778B003C1870 /* Model */,
+				E7977A0A28527C70003C1870 /* Utils */,
 				E79779D128527768003C1870 /* ChessTimeXApp.swift */,
-				E79779D328527768003C1870 /* ContentView.swift */,
 				E79779D52852776A003C1870 /* Assets.xcassets */,
 				E79779D72852776A003C1870 /* Preview Content */,
 			);
@@ -125,6 +141,59 @@
 				E79779EE2852776A003C1870 /* ChessTimeXUITestsLaunchTests.swift */,
 			);
 			path = ChessTimeXUITests;
+			sourceTree = "<group>";
+		};
+		E79779FB28527783003C1870 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E79779D328527768003C1870 /* GameView.swift */,
+				E7977A0328527BD4003C1870 /* GameViewModel.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E79779FC2852778B003C1870 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E7977A0F28527EB6003C1870 /* DataClass */,
+				E7977A0628527C10003C1870 /* Data */,
+				E7977A0528527C09003C1870 /* Enum */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E7977A0528527C09003C1870 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				E7977A0128527982003C1870 /* IncrementType.swift */,
+				E79779FD285277A7003C1870 /* GameType.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
+		E7977A0628527C10003C1870 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				E79779FF285278A3003C1870 /* GameRule.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		E7977A0A28527C70003C1870 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E7977A0B28527C9A003C1870 /* GameProtocol.swift */,
+				E7977A0D28527E41003C1870 /* GameTimerProtocol.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		E7977A0F28527EB6003C1870 /* DataClass */ = {
+			isa = PBXGroup;
+			children = (
+				E7977A1028527F08003C1870 /* GameTimer.swift */,
+			);
+			path = DataClass;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +326,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E79779D428527768003C1870 /* ContentView.swift in Sources */,
+				E7977A0428527BD4003C1870 /* GameViewModel.swift in Sources */,
+				E79779FE285277A8003C1870 /* GameType.swift in Sources */,
+				E7977A1128527F08003C1870 /* GameTimer.swift in Sources */,
+				E79779D428527768003C1870 /* GameView.swift in Sources */,
 				E79779D228527768003C1870 /* ChessTimeXApp.swift in Sources */,
+				E7977A00285278A3003C1870 /* GameRule.swift in Sources */,
+				E7977A0228527982003C1870 /* IncrementType.swift in Sources */,
+				E7977A0C28527C9A003C1870 /* GameProtocol.swift in Sources */,
+				E7977A0E28527E41003C1870 /* GameTimerProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

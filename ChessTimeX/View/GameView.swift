@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  GameView.swift
 //  ChessTimeX
 //
 //  Created by Yazdan on 6/9/22.
@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct GameView: View {
     var body: some View {
         Text("Hello, world!")
             .padding()
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct GameView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        GameView()
     }
 }
