@@ -20,6 +20,8 @@
 		E7977A0428527BD4003C1870 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A0328527BD4003C1870 /* GameViewModel.swift */; };
 		E7977A1128527F08003C1870 /* GameTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A1028527F08003C1870 /* GameTimer.swift */; };
 		E7977A13285292C4003C1870 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A12285292C4003C1870 /* Game.swift */; };
+		E7977A3A28537BD2003C1870 /* SecondsToTimerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A3928537BD2003C1870 /* SecondsToTimerExtension.swift */; };
+		E7977A3C28537D2A003C1870 /* DefaultGameRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A3B28537D2A003C1870 /* DefaultGameRule.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,8 @@
 		E7977A0328527BD4003C1870 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		E7977A1028527F08003C1870 /* GameTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimer.swift; sourceTree = "<group>"; };
 		E7977A12285292C4003C1870 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		E7977A3928537BD2003C1870 /* SecondsToTimerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondsToTimerExtension.swift; sourceTree = "<group>"; };
+		E7977A3B28537D2A003C1870 /* DefaultGameRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGameRule.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				E79779FF285278A3003C1870 /* GameRule.swift */,
+				E7977A3B28537D2A003C1870 /* DefaultGameRule.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -180,6 +185,7 @@
 		E7977A0A28527C70003C1870 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				E7977A3928537BD2003C1870 /* SecondsToTimerExtension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -324,9 +330,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7977A0428527BD4003C1870 /* GameViewModel.swift in Sources */,
+				E7977A3C28537D2A003C1870 /* DefaultGameRule.swift in Sources */,
 				E7977A13285292C4003C1870 /* Game.swift in Sources */,
 				E79779FE285277A8003C1870 /* GameType.swift in Sources */,
 				E7977A1128527F08003C1870 /* GameTimer.swift in Sources */,
+				E7977A3A28537BD2003C1870 /* SecondsToTimerExtension.swift in Sources */,
 				E79779D428527768003C1870 /* GameView.swift in Sources */,
 				E79779D228527768003C1870 /* ChessTimeXApp.swift in Sources */,
 				E7977A00285278A3003C1870 /* GameRule.swift in Sources */,

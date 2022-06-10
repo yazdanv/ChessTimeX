@@ -8,9 +8,11 @@
 import Foundation
 
 struct GameRule {
+    let title: String
+    
     let gameType: GameType
-    let timeSecondsPlayer1: Int
-    let timeSecondsPlayer2: Int
+    let timeSecondsFirstPlayer: Int
+    let timeSecondsSecondPlayer: Int
     
     let incrementType: IncrementType
     let incrementSeconds: Int

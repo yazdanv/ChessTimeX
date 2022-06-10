@@ -8,6 +8,7 @@
 import Foundation
 
 enum IncrementType {
+    case none
     case fisher
     // TODO: Implement bronstein and delay incremenet types
 }

@@ -10,12 +10,9 @@ import Combine
 
 class GameViewModel: ObservableObject {
  
-    // Variables for conformance to Game Protocol
-    // Implementation inside the extension to GameViewModel
-    var firstPlayerTimer: GameTimerProtocol?
-    var secondPlayerTimer: GameTimerProtocol?
+    var game: GameProtocol
     
-    var subscriptions = Set<AnyCancellable>()
+    var disposables = Set<AnyCancellable>()
     
     @Published var isPlaying = false
     @Published var firstPlayersTurn = true
@@ -23,13 +20,57 @@ class GameViewModel: ObservableObject {
     @Published var secondPlayerShowTime = "00:05:00"
     
     init() {
-        $isPlaying.sink(receiveValue: { _isPlaying in
-                
-        }).store(in: &subscriptions)
+        game = ClassicGame(gameRule: DefaultGameRule.defaultRule)
+        
+        // Binding the model publishers to view publishers rather than using the game object
+        //   publishers directly inside view, to make sure model side and view side are only
+        //   attached using view model and therefore completly detachable
+        bindPublishers()
     }
     
-}
-
-extension GameViewModel: GameProtocol {
+    func play() {
+        game.play()
+    }
     
+    func pause() {
+        game.pause()
+    }
+    
+    func resetGame() {
+        game.reset()
+    }
+    
+    func changeRule() {
+        
+    }
+    
+    func bindPublishers() {
+        game.isPlaying
+            .receive(on: DispatchQueue.main)
+            .removeDuplicates()
+            .sink { [weak self] isPlaying in
+                self?.isPlaying = isPlaying
+            }.store(in: &disposables)
+        game.firstPlayersTurn
+            .receive(on: DispatchQueue.main)
+            .removeDuplicates()
+            .sink { [weak self] firstPlayersTurn in
+                self?.firstPlayersTurn = firstPlayersTurn
+            }.store(in: &disposables)
+        game.firstPlayerSeconds
+            .receive(on: DispatchQueue.main)
+            .removeDuplicates()
+            .map { $0.timerString }
+            .sink { [weak self] timeString in
+                self?.firstPlayerShowTime = timeString
+            }.store(in: &disposables)
+        game.secondPlayerSeconds
+            .receive(on: DispatchQueue.main)
+            .removeDuplicates()
+            .map { $0.timerString }
+            .sink { [weak self] timeString in
+                self?.secondPlayerShowTime = timeString
+            }.store(in: &disposables)
+    }
+
 }
