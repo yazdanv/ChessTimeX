@@ -21,9 +21,8 @@ class GameViewModel: ObservableObject {
     var secondPlayerState = TimerViewModel()
     
     init() {
-        setGame(gameRule: DefaultGameRule.defaultRule)
+//        setGame(gameRule: DefaultGameRule.defaultRule)
         bindGameRule()
-        bindPublishers()
     }
     
     // Create a different game object based on the type provided
@@ -34,6 +33,7 @@ class GameViewModel: ObservableObject {
         case .hourglass:
             game = HourglassGame(gameRule: gameRule)
         }
+        bindPublishers()
     }
     
     func play() {
@@ -58,12 +58,12 @@ class GameViewModel: ObservableObject {
     
     func bindGameRule() {
         $selectedGameRule
-            .receive(on: DispatchQueue.global())
             .sink { [weak self] gameRule in
                 guard let self = self else {return}
                 guard let gameRule = gameRule else {return}
                 self.setGame(gameRule: gameRule)
             }.store(in: &disposables)
+        selectedGameRule = DefaultGameRule.defaultRule
     }
 
     // Binding the model publishers to view publishers rather than using the game object

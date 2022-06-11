@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct GameRule {
+struct GameRule: Hashable {
     let name: String
     
     let gameType: GameType
-    let timeSecondsFirstPlayer: Int
-    let timeSecondsSecondPlayer: Int
+    let firstPlayerSeconds: Int
+    let secondPlayerSeconds: Int
     
     let incrementType: IncrementType
     let incrementSeconds: Int
@@ -22,9 +22,9 @@ struct GameRule {
 
 extension GameRule {
     var timeTitle: String {
-        return timeSecondsFirstPlayer == timeSecondsSecondPlayer ?
-            timeSecondsFirstPlayer.formattedTimeString:
-            "\(timeSecondsFirstPlayer.formattedTimeString) vs \(timeSecondsSecondPlayer.formattedTimeString)"
+        return firstPlayerSeconds == secondPlayerSeconds ?
+            firstPlayerSeconds.formattedTimeString:
+            "\(firstPlayerSeconds.formattedTimeString) vs \(secondPlayerSeconds.formattedTimeString)"
     }
     
     var incrementTitle: String {

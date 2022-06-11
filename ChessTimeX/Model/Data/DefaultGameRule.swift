@@ -13,22 +13,22 @@ struct DefaultGameRule {
         defaultRule,
         GameRule(name: "Rapid",
                 gameType: GameType.classic,
-                timeSecondsFirstPlayer: 10 * 60,
-                timeSecondsSecondPlayer: 10 * 60,
+                firstPlayerSeconds: 10 * 60,
+                secondPlayerSeconds: 10 * 60,
                 incrementType: IncrementType.fisher,
                 incrementSeconds: 10
        ),
         GameRule(name: "Rapid",
                 gameType: GameType.classic,
-                timeSecondsFirstPlayer: 30 * 60,
-                timeSecondsSecondPlayer: 30 * 60,
+                firstPlayerSeconds: 30 * 60,
+                secondPlayerSeconds: 30 * 60,
                 incrementType: IncrementType.none,
                 incrementSeconds: 0
        ),
         GameRule(name: "",
                 gameType: GameType.hourglass,
-                timeSecondsFirstPlayer: 5 * 60,
-                timeSecondsSecondPlayer: 5 * 60,
+                firstPlayerSeconds: 5 * 60,
+                secondPlayerSeconds: 5 * 60,
                 incrementType: IncrementType.none,
                 incrementSeconds: 0
        )
@@ -36,8 +36,8 @@ struct DefaultGameRule {
     
     static var defaultRule: GameRule = GameRule(name: "Blitz",
                                                 gameType: GameType.classic,
-                                                timeSecondsFirstPlayer: 5 * 60,
-                                                timeSecondsSecondPlayer: 5 * 60,
+                                                firstPlayerSeconds: 5 * 60,
+                                                secondPlayerSeconds: 5 * 60,
                                                 incrementType: IncrementType.none,
                                                 incrementSeconds: 0
                                        )

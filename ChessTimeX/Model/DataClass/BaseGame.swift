@@ -26,8 +26,8 @@ class BaseGame: GameProtocol {
     init(gameRule: GameRule) {
         rule = gameRule
         
-        firstPlayerTimer = GameTimer(seconds: rule.timeSecondsFirstPlayer)
-        secondPlayerTimer = GameTimer(seconds: rule.timeSecondsSecondPlayer)
+        firstPlayerTimer = GameTimer(seconds: rule.firstPlayerSeconds)
+        secondPlayerTimer = GameTimer(seconds: rule.secondPlayerSeconds)
         
         setupObservers()
     }

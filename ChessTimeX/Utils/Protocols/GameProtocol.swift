@@ -56,8 +56,8 @@ extension GameProtocol {
     func reset() {
         isPlaying.send(false)
         isFirstPlayersTurn.send(true)
-        firstPlayerTimer.resetTimer(seconds: rule.timeSecondsFirstPlayer)
-        secondPlayerTimer.resetTimer(seconds: rule.timeSecondsSecondPlayer)
+        firstPlayerTimer.resetTimer(seconds: rule.firstPlayerSeconds)
+        secondPlayerTimer.resetTimer(seconds: rule.secondPlayerSeconds)
     }
     
     func play() {
