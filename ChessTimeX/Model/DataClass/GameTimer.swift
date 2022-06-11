@@ -8,46 +8,39 @@
 import Foundation
 import Combine
 
-protocol GameTimerProtocol {
-    var timeSeconds: CurrentValueSubject<Int, Never> { get set }
-    var isRunning: CurrentValueSubject<Bool, Never> { get set }
-    
-    func resetTimer(seconds: Int)
-    func incrementTime(seconds: Int)
-}
-
 class GameTimer: GameTimerProtocol {
     
-    var timer: Publishers.Autoconnect<Timer.TimerPublisher>?
-    var timerSubscription: AnyCancellable?
-    var subscriptions = Set<AnyCancellable>()
+    private var timer: Publishers.Autoconnect<Timer.TimerPublisher>?
+    private var timerSubscription: AnyCancellable?
+    private var disposables = Set<AnyCancellable>()
     
-    var isRunning = CurrentValueSubject<Bool, Never>(false)
-    var timeSeconds = CurrentValueSubject<Int, Never>(0)
+    let isRunning = CurrentValueSubject<Bool, Never>(false)
+    let timeSeconds: CurrentValueSubject<Int, Never>
     
-    init() {
-        isRunning.sink(receiveValue: {[weak self] _isRunning in
-            if (_isRunning) {
+    init(seconds: Int = 0) {
+        timeSeconds = CurrentValueSubject<Int, Never>(seconds)
+        isRunning.sink(receiveValue: {[weak self] isRunning in
+            if (isRunning) {
                 self?.attachTimer()
             } else {
                 self?.detachTimer()
             }
-        }).store(in: &subscriptions)
+        }).store(in: &disposables)
     }
     
-    func attachTimer() {
+    private func attachTimer() {
         timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
         timerSubscription = timer?.sink {[weak self] _ in
-            let timeSecondsUnwrapped = self?.timeSeconds.value ?? 0
-            if (timeSecondsUnwrapped > 0) {
-                self?.timeSeconds.send(timeSecondsUnwrapped - 1)
+            guard let self = self else {return}
+            if (self.timeSeconds.value > 0) {
+                self.timeSeconds.send(self.timeSeconds.value - 1)
             } else {
-                self?.detachTimer()
+                self.detachTimer()
             }
         }
     }
     
-    func detachTimer() {
+    private func detachTimer() {
         timerSubscription?.cancel()
         timer?.upstream.connect().cancel()
     }

@@ -9,5 +9,6 @@ import Foundation
 
 enum GameType {
     case classic
-    // TODO: Define hourglass game type
+    case hourglass
+    // TODO: Define FIDE game type
 }
