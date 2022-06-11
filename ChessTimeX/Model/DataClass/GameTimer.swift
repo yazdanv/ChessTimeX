@@ -55,4 +55,7 @@ class GameTimer: GameTimerProtocol {
         timeSeconds.send(timeSecondsValue + seconds)
     }
     
+    func changeRunState(_ isRunning: Bool) {
+        self.isRunning.send(isRunning)
+    }
 }

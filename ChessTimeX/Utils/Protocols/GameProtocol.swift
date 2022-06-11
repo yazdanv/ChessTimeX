@@ -35,9 +35,21 @@ extension GameProtocol {
         return secondPlayerTimer.timeSeconds
     }
     
+    var firstTimerActive: AnyPublisher<Bool, Never> {
+        Publishers.CombineLatest(isPlaying, isFirstPlayersTurn)
+            .map { $0.0 && $0.1 }
+            .eraseToAnyPublisher()
+    }
+    
+    var secondTimerActive: AnyPublisher<Bool, Never> {
+        Publishers.CombineLatest(isPlaying, isFirstPlayersTurn)
+            .map { $0.0 && !$0.1 }
+            .eraseToAnyPublisher()
+    }
+    
     func changePlayState(_ playState: Bool) {
         let timer = self.isFirstPlayersTurn.value ? self.firstPlayerTimer:self.secondPlayerTimer
-        timer.isRunning.send(playState)
+        timer.changeRunState(playState)
     }
 
     
@@ -62,17 +74,17 @@ extension GameProtocol {
     
     func changeToFirstPlayer() {
         if !firstPlayerTimer.isRunning.value && secondPlayerSeconds.value > 0 {
-            secondPlayerTimer.isRunning.send(false)
+            secondPlayerTimer.changeRunState(false)
             changingFromSecondToFirst()
-            firstPlayerTimer.isRunning.send(true)
+            firstPlayerTimer.changeRunState(true)
         }
     }
     
     func changeToSecondPlayer() {
         if !secondPlayerTimer.isRunning.value && firstPlayerSeconds.value > 0 {
-            firstPlayerTimer.isRunning.send(false)
+            firstPlayerTimer.changeRunState(false)
             changingFromFirstToSecond()
-            secondPlayerTimer.isRunning.send(true)
+            secondPlayerTimer.changeRunState(true)
         }
     }
     

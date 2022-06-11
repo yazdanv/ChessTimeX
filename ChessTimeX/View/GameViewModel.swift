@@ -15,9 +15,9 @@ class GameViewModel: ObservableObject {
     var disposables = Set<AnyCancellable>()
     
     @Published var isPlaying = false
-    @Published var isFirstPlayersTurn = true
-    @Published var firstPlayerShowTime = "00:05:00"
-    @Published var secondPlayerShowTime = "00:05:00"
+    
+    var firstPlayerState = TimerViewModel()
+    var secondPlayerState = TimerViewModel()
     
     init() {
         setGame(gameRule: DefaultGameRule.defaultRule)
@@ -65,25 +65,31 @@ class GameViewModel: ObservableObject {
             .sink { [weak self] isPlaying in
                 self?.isPlaying = isPlaying
             }.store(in: &disposables)
-        game.isFirstPlayersTurn
+        game.firstTimerActive
             .receive(on: DispatchQueue.main)
             .removeDuplicates()
-            .sink { [weak self] isFirstPlayersTurn in
-                self?.isFirstPlayersTurn = isFirstPlayersTurn
+            .sink { [weak self] isActive in
+                self?.firstPlayerState.updateActiveState(isActive)
+            }.store(in: &disposables)
+        game.secondTimerActive
+            .receive(on: DispatchQueue.main)
+            .removeDuplicates()
+            .sink { [weak self] isActive in
+                self?.secondPlayerState.updateActiveState(isActive)
             }.store(in: &disposables)
         game.firstPlayerSeconds
             .receive(on: DispatchQueue.main)
             .removeDuplicates()
             .map { $0 > 0 ? $0.timerString:"Player 1 Time Finished" }
             .sink { [weak self] timeString in
-                self?.firstPlayerShowTime = timeString
+                self?.firstPlayerState.setShowTime(timeString)
             }.store(in: &disposables)
         game.secondPlayerSeconds
             .receive(on: DispatchQueue.main)
             .removeDuplicates()
             .map { $0 > 0 ? $0.timerString:"Player 2 Time Finished" }
             .sink { [weak self] timeString in
-                self?.secondPlayerShowTime = timeString
+                self?.secondPlayerState.setShowTime(timeString)
             }.store(in: &disposables)
     }
 
