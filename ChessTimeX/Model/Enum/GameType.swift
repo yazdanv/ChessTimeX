@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum GameType {
-    case classic
-    case hourglass
+enum GameType: String {
+    case classic = "Classic"
+    case hourglass = "Hourglass"
     // TODO: Define FIDE game type
 }

@@ -5,7 +5,7 @@
 //  Created by Yazdan on 6/9/22.
 //
 
-import SwiftUI
+import SwiftUI 
 
 struct GameView: View {
     @ObservedObject var viewModel: GameViewModel

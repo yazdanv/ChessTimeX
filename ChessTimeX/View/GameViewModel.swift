@@ -15,15 +15,14 @@ class GameViewModel: ObservableObject {
     var disposables = Set<AnyCancellable>()
     
     @Published var isPlaying = false
+    @Published var selectedGameRule: GameRule?
     
     var firstPlayerState = TimerViewModel()
     var secondPlayerState = TimerViewModel()
     
     init() {
         setGame(gameRule: DefaultGameRule.defaultRule)
-        // Binding the model publishers to view publishers rather than using the game object
-        //   publishers directly inside view, to make sure model side and view side are only
-        //   attached using view model and therefore completly detachable
+        bindGameRule()
         bindPublishers()
     }
     
@@ -57,7 +56,19 @@ class GameViewModel: ObservableObject {
         game.changeToFirstPlayer()
     }
     
+    func bindGameRule() {
+        $selectedGameRule
+            .receive(on: DispatchQueue.global())
+            .sink { [weak self] gameRule in
+                guard let self = self else {return}
+                guard let gameRule = gameRule else {return}
+                self.setGame(gameRule: gameRule)
+            }.store(in: &disposables)
+    }
 
+    // Binding the model publishers to view publishers rather than using the game object
+    //   publishers directly inside view, to make sure model side and view side are only
+    //   attached using view model and therefore completly detachable
     func bindPublishers() {
         game.isPlaying
             .receive(on: DispatchQueue.main)
