@@ -8,46 +8,32 @@
 import Foundation
 import Combine
 
-class GameTimer: GameTimerProtocol {
+struct GameTimer: GameTimerProtocol {
     
-    private var timer: Publishers.Autoconnect<Timer.TimerPublisher>?
-    private var timerSubscription: AnyCancellable?
-    private var disposables = Set<AnyCancellable>()
+    private var timer: Timer.TimerPublisher?
+    private var disposables = Disposables()
     
     let isRunning = CurrentValueSubject<Bool, Never>(false)
     let timeSeconds: CurrentValueSubject<Int, Never>
     
     init(seconds: Int = 0) {
         timeSeconds = CurrentValueSubject<Int, Never>(seconds)
-        isRunning.sink(receiveValue: {[weak self] isRunning in
-            if (isRunning) {
-                self?.attachTimer()
-            } else {
-                self?.detachTimer()
-            }
-        }).store(in: &disposables)
+        timer = Timer.publish(every: 1, on: .main, in: .common)
     }
     
     private func attachTimer() {
-        timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-        timerSubscription = timer?.sink {[weak self] _ in
-            guard let self = self else {return}
+        timer?.autoconnect().sink {_ in
             if (self.timeSeconds.value > 0) {
                 self.timeSeconds.send(self.timeSeconds.value - 1)
             } else {
                 self.detachTimer()
             }
-        }
+        }.store(in: &disposables.items)
     }
     
     private func detachTimer() {
-        timerSubscription?.cancel()
-        timer?.upstream.connect().cancel()
-    }
-
-    func resetTimer(seconds: Int) {
-        isRunning.send(false)
-        timeSeconds.send(seconds)
+        disposables.cancelAll()
+        timer?.connect().cancel()
     }
     
     func incrementTime(seconds: Int) {
@@ -55,7 +41,22 @@ class GameTimer: GameTimerProtocol {
         timeSeconds.send(timeSecondsValue + seconds)
     }
     
-    func changeRunState(_ isRunning: Bool) {
-        self.isRunning.send(isRunning)
+    func startTimer() {
+        if (!isRunning.value) {
+            attachTimer()
+            isRunning.send(true)
+        }
+    }
+    
+    func stopTimer() {
+        if (isRunning.value) {
+            detachTimer()
+            isRunning.send(false)
+        }
+    }
+    
+    func resetTimer(seconds: Int) {
+        stopTimer()
+        timeSeconds.send(seconds)
     }
 }

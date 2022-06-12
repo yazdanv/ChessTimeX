@@ -26,13 +26,13 @@ class GameTests: XCTestCase {
     }
     
     func testTimersSetProperly() {
-        let game = BaseGame(gameRule: sampleGameRule)
+        let game = SampleGameWithoutIncrement(gameRule: sampleGameRule)
         XCTAssertEqual(game.firstPlayerSeconds.value, sampleGameRule.firstPlayerSeconds)
         XCTAssertEqual(game.secondPlayerSeconds.value, sampleGameRule.secondPlayerSeconds)
     }
     
     func testPlayMethodSetsToisPlaying() {
-        let game = BaseGame(gameRule: sampleGameRule)
+        let game = SampleGameWithoutIncrement(gameRule: sampleGameRule)
         
         game.pause()
         testPublisherTillMatch(game.isPlaying, timeout: 1,
@@ -41,7 +41,7 @@ class GameTests: XCTestCase {
     }
     
     func testChangeToPlayerMakesItActiveWhilePlaying() {
-        let game = BaseGame(gameRule: sampleGameRule)
+        let game = SampleGameWithoutIncrement(gameRule: sampleGameRule)
         
         game.play()
         testPublisherTillMatch(game.secondTimerActive, timeout: 1,
@@ -53,7 +53,7 @@ class GameTests: XCTestCase {
     }
     
     func testPlayerTimersDecreaseTimeProperly() throws {
-        let game = BaseGame(gameRule: sampleGameRule)
+        let game = SampleGameWithoutIncrement(gameRule: sampleGameRule)
         let firstPlayerSeconds = sampleGameRule.firstPlayerSeconds
         let secondPlayerSeconds = sampleGameRule.secondPlayerSeconds
         

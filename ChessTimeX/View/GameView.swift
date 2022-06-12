@@ -12,6 +12,8 @@ struct GameView: View {
     
     @State private var gameRuleSelectShown: Bool = false
     @State private var gameRuleNewShown: Bool = false
+    @State private var resetGameAlertShown: Bool = false
+    @State private var valueCheckPresented: Bool = false
     
     init() {
         viewModel = GameViewModel()
@@ -35,18 +37,30 @@ struct GameView: View {
             .background(.ultraThinMaterial)
             if (gameRuleSelectShown) {
                 GameRuleListView(selectedGameRule: $viewModel.selectedGameRule,
-                                currentViewShown: $gameRuleSelectShown,
-                                newRuleViewShown: $gameRuleNewShown)
+                                 hideCurrent: { gameRuleSelectShown = false },
+                                 showNewRule: { gameRuleNewShown = true })
             }
             if (gameRuleNewShown) {
                 CustomGameRuleView(newGameRule: $viewModel.selectedGameRule,
-                                  currentViewShown: $gameRuleNewShown)
+                                   valueCheckPresented: $valueCheckPresented,
+                                   hideCurrent: { gameRuleNewShown = false })
             }
         }
         .onReceive(viewModel.$selectedGameRule, perform: { _ in
             gameRuleSelectShown = false
             gameRuleNewShown = false
         })
+        .alert(isPresented: $resetGameAlertShown) {
+            Alert(title: Text("Resetting Game"),
+                  message: Text("Are you sure you want to reset this game?"),
+                  primaryButton: .default(Text("Yes"), action: {viewModel.resetGame()}),
+                  secondaryButton: .cancel(Text("No")))
+        }
+        .alert(isPresented: $valueCheckPresented) {
+            Alert(title: Text("Time Invalid"),
+                  message: Text("Time should be more than Zero"),
+                  dismissButton: .cancel(Text("Ok")))
+        }
     }
 }
 
@@ -54,6 +68,7 @@ private extension GameView {
     var actionBar: some View {
         return HStack(alignment: .center) {
             Button(action: {
+                viewModel.pause()
                 gameRuleSelectShown = true
             }) {
                 Image(systemName: "timer")
@@ -65,7 +80,10 @@ private extension GameView {
                     .font(.largeTitle)
                     .foregroundColor(.primary)
             }
-            Button(action: viewModel.resetGame) {
+            Button(action: {
+                viewModel.pause()
+                resetGameAlertShown = true
+            }) {
                 Image(systemName: "arrow.uturn.forward")
                     .font(.largeTitle)
                     .foregroundColor(.primary)

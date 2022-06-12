@@ -27,7 +27,7 @@ struct DurationWheelPicker: UIViewRepresentable {
     }
     
     func updateUIView(_ view: UIPickerView, context: UIViewRepresentableContext<DurationWheelPicker>) {
-        view.selectRow(selection.wrappedValue, inComponent: 0, animated: false)
+        view.selectRow(selection.wrappedValue, inComponent: 0, animated: true)
     }
     
     class Coordinator: NSObject, UIPickerViewDataSource, UIPickerViewDelegate {

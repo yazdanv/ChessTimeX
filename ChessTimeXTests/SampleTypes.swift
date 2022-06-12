@@ -1,14 +1,16 @@
 //
-//  GameProtocol.swift
-//  ChessTimeX
+//  SampleStructs.swift
+//  ChessTimeXTests
 //
-//  Created by Yazdan on 6/10/22.
+//  Created by Yazdan on 6/12/22.
 //
 
 import Foundation
 import Combine
+@testable import ChessTimeX
 
-struct ClassicGame: GameProtocol, IncrementTypeProtocol {
+struct SampleGameWithoutIncrement: GameProtocol {
+    
     let rule: GameRule
     let disposables = Disposables()
     

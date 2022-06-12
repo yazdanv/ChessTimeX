@@ -11,21 +11,21 @@ import SwiftUI
 struct CustomGameRuleView: View {
     
     @Binding var newGameRule: GameRule?
-    @Binding var currentViewShown: Bool
+    @Binding var valueCheckPresented: Bool
+    let hideCurrent: (() -> Void)
     
     @State var name: String = ""
     @State var gameType: GameType = .classic
-    @State var firstPlayerSeconds: Int = 0
-    @State var secondPlayerSeconds: Int = 0
+    @State var firstPlayerSeconds: Int = 300
+    @State var secondPlayerSeconds: Int = 300
+    @State var secondPlayerSameAsFirst: Bool = true
     @State var incrementType: IncrementType = .none
     @State var incrementSeconds: Int = 0
     
     var body: some View {
         return ZStack {
             Color(uiColor: .gray.withAlphaComponent(0.5))
-                .onTapGesture {
-                    currentViewShown = false
-                }
+                .onTapGesture(perform: hideCurrent)
             ZStack {
                 Color.white
                 VStack {
@@ -35,32 +35,53 @@ struct CustomGameRuleView: View {
                         .padding(8)
                     Form {
                         TextField("Game Name (Optional)", text: $name)
-                        Picker("Game Type", selection: $gameType) {
-                            ForEach(GameType.allCases, id: \.self) {
-                                Text($0.rawValue)
-                                    .tag($0)
-                            }
-                        }.pickerStyle(.menu)
+                        
+                        HStack {
+                            Text("Game Type: ").font(.system(size: 18)).foregroundStyle(.gray)
+                            Picker("Game Type", selection: $gameType) {
+                                ForEach(GameType.allCases, id: \.self) {
+                                    Text($0.rawValue)
+                                        .tag($0)
+                                }
+                            }.pickerStyle(.menu)
+                        }
+                        
                         DurationPickerView(title: "First Player Time", selectedSeconds: $firstPlayerSeconds)
-                        DurationPickerView(title: "Second Player Time", selectedSeconds: $secondPlayerSeconds)
-                        Picker("Increment Type", selection: $incrementType) {
-                            ForEach(IncrementType.allCases, id: \.self) {
-                                Text($0.rawValue)
-                                    .tag($0)
-                            }
-                        }.pickerStyle(.menu)
+                        DurationPickerView(title: "Second Player Time", selectedSeconds: $secondPlayerSeconds, sameAsFirst: $secondPlayerSameAsFirst)
+                        
+                        HStack {
+                            Text("Increment Type: ").font(.system(size: 18)).foregroundStyle(.gray)
+                            Picker("Increment Type", selection: $incrementType) {
+                                ForEach(IncrementType.allCases, id: \.self) {
+                                    Text($0.rawValue)
+                                        .tag($0)
+                                }
+                            }.pickerStyle(.menu)
+                        }
                         if (incrementType != .none) {
                             DurationPickerView(title: "Increment Time", selectedSeconds: $incrementSeconds)
                         }
                     }
                     .padding(8)
                     Spacer()
-                    Button("Create") {
-                        newGameRule = GameRule(name: name, gameType: gameType,
-                                               firstPlayerSeconds: firstPlayerSeconds,
-                                               secondPlayerSeconds: secondPlayerSeconds,
-                                               incrementType: incrementType,
-                                               incrementSeconds: incrementSeconds)
+                    HStack {
+                        Button("Cancel", action: hideCurrent)
+                            .frame(maxWidth: .infinity)
+                        Rectangle()
+                            .background(.gray)
+                            .frame(width: 0.5, height: 30)
+                        Button("Create") {
+                            if (firstPlayerSeconds == 0 || secondPlayerSeconds == 0 && !secondPlayerSameAsFirst) {
+                                valueCheckPresented = true
+                            } else {
+                                newGameRule = GameRule(name: name, gameType: gameType,
+                                                       firstPlayerSeconds: firstPlayerSeconds,
+                                                       secondPlayerSeconds: secondPlayerSameAsFirst ? firstPlayerSeconds:secondPlayerSeconds,
+                                                       incrementType: incrementType,
+                                                       incrementSeconds: incrementSeconds)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
                     }
                     .padding(8)
                 }
@@ -69,6 +90,7 @@ struct CustomGameRuleView: View {
             .frame(height: 600, alignment: .center)
             .padding(EdgeInsets.init(top: 0, leading: 32, bottom: 0, trailing: 32))
         }
+
     }
     
 }

@@ -8,34 +8,40 @@
 import Foundation
 import Combine
 
-class HourglassGame: BaseGame, IncrementTypeProtocol {
+
+struct HourglassGame: GameProtocol, IncrementTypeProtocol {
+    let rule: GameRule
+    let disposables = Disposables()
     
-    override func setupObservers() {
-        super.setupObservers()
+    let isPlaying = CurrentValueSubject<Bool, Never>(false)
+    let isFirstPlayersTurn = CurrentValueSubject<Bool, Never>(true)
+    
+    let firstPlayerTimer: GameTimerProtocol
+    let secondPlayerTimer: GameTimerProtocol
+    
+    init(gameRule: GameRule) {
+        rule = gameRule
+        
+        firstPlayerTimer = GameTimer(seconds: rule.firstPlayerSeconds)
+        secondPlayerTimer = GameTimer(seconds: rule.secondPlayerSeconds)
+        
+        setObservers()
+    }
+    
+    private func setObservers() {
         self.firstPlayerSeconds
             .receive(on: DispatchQueue.global())
-            .sink { [weak self] _ in
-                guard let self = self else {return}
+            .sink { _ in
                 if (self.isFirstPlayersTurn.value && self.isPlaying.value) {
                     self.secondPlayerTimer.incrementTime(seconds: 1)
                 }
-            }.store(in: &disposables)
+            }.store(in: &disposables.items)
         self.secondPlayerSeconds
             .receive(on: DispatchQueue.global())
-            .sink { [weak self] _ in
-                guard let self = self else {return}
+            .sink { _ in
                 if (!self.isFirstPlayersTurn.value && self.isPlaying.value) {
                     self.firstPlayerTimer.incrementTime(seconds: 1)
                 }
-            }.store(in: &disposables)
+            }.store(in: &disposables.items)
     }
-    
-    override func changingFromFirstToSecond() {
-        addTimeIfNeeded(self.firstPlayerTimer)
-    }
-    
-    override func changingFromSecondToFirst() {
-        addTimeIfNeeded(self.secondPlayerTimer)
-    }
-    
 }

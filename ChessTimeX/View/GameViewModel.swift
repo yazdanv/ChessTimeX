@@ -21,7 +21,6 @@ class GameViewModel: ObservableObject {
     var secondPlayerState = TimerViewModel()
     
     init() {
-//        setGame(gameRule: DefaultGameRule.defaultRule)
         bindGameRule()
     }
     

@@ -15,14 +15,11 @@ import Combine
 //      this state is regardless of isPlaying state and always should follow the said guideline
 protocol GameProtocol {
     var rule: GameRule { get }
-    var disposables: Set<AnyCancellable> { get set }
+    var disposables: Disposables { get }
     var isPlaying: CurrentValueSubject<Bool, Never> { get }
     var isFirstPlayersTurn: CurrentValueSubject<Bool, Never> { get }
     var firstPlayerTimer: GameTimerProtocol { get }
     var secondPlayerTimer: GameTimerProtocol { get }
-    
-    func changingFromFirstToSecond()
-    func changingFromSecondToFirst()
 }
 
 extension GameProtocol {
@@ -47,12 +44,6 @@ extension GameProtocol {
             .eraseToAnyPublisher()
     }
     
-    func changePlayState(_ playState: Bool) {
-        let timer = self.isFirstPlayersTurn.value ? self.firstPlayerTimer:self.secondPlayerTimer
-        timer.changeRunState(playState)
-    }
-
-    
     func reset() {
         isPlaying.send(false)
         isFirstPlayersTurn.send(true)
@@ -63,29 +54,44 @@ extension GameProtocol {
     func play() {
         if (!isPlaying.value) {
             isPlaying.send(true)
+            self.changePlayState(true)
         }
     }
     
     func pause() {
         if (isPlaying.value) {
             isPlaying.send(false)
+            self.changePlayState(false)
         }
     }
     
     func changeToFirstPlayer() {
         if !firstPlayerTimer.isRunning.value && secondPlayerSeconds.value > 0 {
-            secondPlayerTimer.changeRunState(false)
+            secondPlayerTimer.stopTimer()
             changingFromSecondToFirst()
-            firstPlayerTimer.changeRunState(true)
+            firstPlayerTimer.startTimer()
+            self.isFirstPlayersTurn.send(true)
         }
     }
     
     func changeToSecondPlayer() {
         if !secondPlayerTimer.isRunning.value && firstPlayerSeconds.value > 0 {
-            firstPlayerTimer.changeRunState(false)
+            firstPlayerTimer.stopTimer()
             changingFromFirstToSecond()
-            secondPlayerTimer.changeRunState(true)
+            secondPlayerTimer.startTimer()
+            self.isFirstPlayersTurn.send(false)
         }
     }
+    
+    // Private Code
+    
+    private func changePlayState(_ playState: Bool) {
+        let timer = self.isFirstPlayersTurn.value ? self.firstPlayerTimer:self.secondPlayerTimer
+        (playState ? timer.startTimer:timer.stopTimer)()
+    }
+    
+    private func changingFromFirstToSecond() {}
+    
+    private func changingFromSecondToFirst() {}
     
 }
