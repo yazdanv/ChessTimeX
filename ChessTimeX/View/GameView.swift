@@ -10,6 +10,9 @@ import SwiftUI
 struct GameView: View {
     @ObservedObject var viewModel: GameViewModel
     
+    @State private var gameRuleSelectShown: Bool = false
+    @State private var gameRuleNewShown: Bool = false
+    
     init() {
         viewModel = GameViewModel()
     }
@@ -30,10 +33,20 @@ struct GameView: View {
                 )
             }
             .background(.ultraThinMaterial)
-            if (viewModel.selectedGameRule == nil) {
-                GameRuleListView(selectedGameRule: $viewModel.selectedGameRule)
+            if (gameRuleSelectShown) {
+                GameRuleListView(selectedGameRule: $viewModel.selectedGameRule,
+                                currentViewShown: $gameRuleSelectShown,
+                                newRuleViewShown: $gameRuleNewShown)
+            }
+            if (gameRuleNewShown) {
+                CustomGameRuleView(newGameRule: $viewModel.selectedGameRule,
+                                  currentViewShown: $gameRuleNewShown)
             }
         }
+        .onReceive(viewModel.$selectedGameRule, perform: { _ in
+            gameRuleSelectShown = false
+            gameRuleNewShown = false
+        })
     }
 }
 
@@ -41,7 +54,7 @@ private extension GameView {
     var actionBar: some View {
         return HStack(alignment: .center) {
             Button(action: {
-                viewModel.selectedGameRule = nil
+                gameRuleSelectShown = true
             }) {
                 Image(systemName: "timer")
                     .font(.largeTitle)

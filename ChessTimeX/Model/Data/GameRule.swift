@@ -45,7 +45,7 @@ extension GameRule {
         }
         switch gameType {
         case .classic:
-            return "baseball.diamond.bases"
+            return "rectangle.3.group.fill"
         case .hourglass:
             return "hourglass.circle.fill"
         }

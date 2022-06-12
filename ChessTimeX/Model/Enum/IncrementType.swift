@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum IncrementType: String {
+enum IncrementType: String, CaseIterable, Hashable {
     case none = "No Increment"
     case fisher = "Fisher"
     // TODO: Implement bronstein and delay incremenet types

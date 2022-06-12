@@ -24,13 +24,18 @@ struct TimerView: View {
                 .shadow(radius: 5)
                 .cornerRadius(10)
             VStack {
-                Text(gameRule?.nameTitle ?? "").font(.title).bold()
+                HStack {
+                    Image(systemName: gameRule?.iconImage ?? "")
+                    Text(gameRule?.nameTitle ?? "").font(.title).bold()
+                    Text("  |  ").bold()
+                    Text(gameRule?.incrementTitle ?? "").bold()
+                }
                 Spacer()
             }
             .padding(16)
             
             Text(timerViewModel.playerShowTime)
-                .font(.largeTitle.bold())
+                .font(.system(size: 80))
                 .foregroundColor(timerViewModel.isTimerActive ? .primary:.secondary)
         }
             .onTapGesture(perform: onTap)
