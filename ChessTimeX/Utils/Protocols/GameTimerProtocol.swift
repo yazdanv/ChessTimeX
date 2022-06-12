@@ -15,5 +15,6 @@ protocol GameTimerProtocol {
     func resetTimer(seconds: Int)
     func incrementTime(seconds: Int)
     
-    func changeRunState(_ isRunning: Bool)
+    func startTimer()
+    func stopTimer()
 }
