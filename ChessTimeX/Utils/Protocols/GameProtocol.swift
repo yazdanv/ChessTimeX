@@ -86,7 +86,7 @@ extension GameProtocol {
     }
     
     func pause() {
-        if (isPlaying.value) {
+        if (isPlaying.value && activePlayerHasTime) {
             isPlaying.send(false)
             self.changePlayState(false)
         }
@@ -126,9 +126,14 @@ extension GameProtocol {
     
     
     // MARK: Private Code
+    private var activePlayerHasTime: Bool {
+        let activeTimer = self.isFirstPlayersTurn.value ? self.firstPlayerTimer:self.secondPlayerTimer
+        return activeTimer.timeSeconds.value > 0
+    }
+    
     private func changePlayState(_ playState: Bool) {
-        let timer = self.isFirstPlayersTurn.value ? self.firstPlayerTimer:self.secondPlayerTimer
-        (playState ? timer.startTimer:timer.stopTimer)()
+        let activeTimer = self.isFirstPlayersTurn.value ? self.firstPlayerTimer:self.secondPlayerTimer
+        (playState ? activeTimer.startTimer:activeTimer.stopTimer)()
     }
     
 }

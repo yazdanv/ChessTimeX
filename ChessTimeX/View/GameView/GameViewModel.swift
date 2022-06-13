@@ -10,15 +10,14 @@ import Combine
 
 class GameViewModel: ObservableObject {
  
-    var game: GameProtocol!
-    
-    var disposables = Set<AnyCancellable>()
-    
     @Published var isPlaying = false
     @Published var selectedGameRule: GameRule?
     
     var firstPlayerState = TimerViewModel()
     var secondPlayerState = TimerViewModel()
+    
+    private var game: GameProtocol!
+    private var disposables = Set<AnyCancellable>()
     
     init() {
         bindGameRule()
@@ -55,7 +54,9 @@ class GameViewModel: ObservableObject {
         game.changeToFirstPlayer()
     }
     
-    func bindGameRule() {
+    
+    // MARK: subscribing to required publishers
+    private func bindGameRule() {
         $selectedGameRule
             .sink { [weak self] gameRule in
                 guard let self = self else {return}
@@ -68,7 +69,7 @@ class GameViewModel: ObservableObject {
     // Binding the model publishers to view publishers rather than using the game struct
     //   publishers directly inside view, to make sure model side and view side are only
     //   attached using view model and therefore completly detachable
-    func bindPublishers() {
+    private func bindPublishers() {
         game.isPlaying
             .receive(on: DispatchQueue.main)
             .removeDuplicates()
@@ -85,9 +86,8 @@ class GameViewModel: ObservableObject {
         game.firstPlayerSeconds
             .receive(on: DispatchQueue.main)
             .removeDuplicates()
-            .map { $0 > 0 ? $0.timerString:"Player 1 Time Finished" }
-            .sink { [weak self] timeString in
-                self?.firstPlayerState.setShowTime(timeString)
+            .sink { [weak self] timeSeconds in
+                self?.firstPlayerState.setShowTime(timeSeconds)
             }.store(in: &disposables)
         game.firstPlayerNoOfMoves
             .receive(on: DispatchQueue.main)
@@ -105,9 +105,8 @@ class GameViewModel: ObservableObject {
         game.secondPlayerSeconds
             .receive(on: DispatchQueue.main)
             .removeDuplicates()
-            .map { $0 > 0 ? $0.timerString:"Player 2 Time Finished" }
-            .sink { [weak self] timeString in
-                self?.secondPlayerState.setShowTime(timeString)
+            .sink { [weak self] timeSeconds in
+                self?.secondPlayerState.setShowTime(timeSeconds)
             }.store(in: &disposables)
         game.secondPlayerNoOfMoves
             .receive(on: DispatchQueue.main)

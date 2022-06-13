@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E796C2F728570B0A00B71EE7 /* GameViewActiveAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E796C2F628570B0A00B71EE7 /* GameViewActiveAlert.swift */; };
+		E796C2FE2857710600B71EE7 /* SystemAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E796C2FD2857710600B71EE7 /* SystemAssets.swift */; };
 		E79779D228527768003C1870 /* ChessTimeXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79779D128527768003C1870 /* ChessTimeXApp.swift */; };
 		E79779D428527768003C1870 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79779D328527768003C1870 /* GameView.swift */; };
 		E79779D62852776A003C1870 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E79779D52852776A003C1870 /* Assets.xcassets */; };
@@ -48,6 +49,7 @@
 
 /* Begin PBXFileReference section */
 		E796C2F628570B0A00B71EE7 /* GameViewActiveAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewActiveAlert.swift; sourceTree = "<group>"; };
+		E796C2FD2857710600B71EE7 /* SystemAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemAssets.swift; sourceTree = "<group>"; };
 		E79779CE28527768003C1870 /* ChessTimeX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessTimeX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E79779D128527768003C1870 /* ChessTimeXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessTimeXApp.swift; sourceTree = "<group>"; };
 		E79779D328527768003C1870 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
@@ -123,6 +125,14 @@
 				E7977A582855CC6B003C1870 /* DurationWheelPicker.swift */,
 			);
 			path = GameViewPopups;
+			sourceTree = "<group>";
+		};
+		E796C2FB285770DE00B71EE7 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				E796C2FD2857710600B71EE7 /* SystemAssets.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		E79779C528527768003C1870 = {
@@ -218,6 +228,7 @@
 			children = (
 				E7977A4128539575003C1870 /* Protocols */,
 				E7977A4B2853D9A1003C1870 /* Extensions */,
+				E796C2FB285770DE00B71EE7 /* Constants */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -363,6 +374,7 @@
 				E7977A4A2853D96B003C1870 /* GameTimerProtocol.swift in Sources */,
 				E7977A4F285489C2003C1870 /* TimerView.swift in Sources */,
 				E7977A45285395DD003C1870 /* IncrementProtocol.swift in Sources */,
+				E796C2FE2857710600B71EE7 /* SystemAssets.swift in Sources */,
 				E7977A1128527F08003C1870 /* GameTimer.swift in Sources */,
 				E796C2F728570B0A00B71EE7 /* GameViewActiveAlert.swift in Sources */,
 				E7977A3A28537BD2003C1870 /* SecondsToTimerExtension.swift in Sources */,

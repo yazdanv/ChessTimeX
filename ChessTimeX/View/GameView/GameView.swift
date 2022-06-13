@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GameView: View {
-    @ObservedObject var viewModel: GameViewModel
+    @ObservedObject private var viewModel: GameViewModel
     
     @State private var gameRuleSelectShown: Bool = false
     @State private var gameRuleNewShown: Bool = false
@@ -43,8 +43,10 @@ struct GameView: View {
             }
             if (gameRuleNewShown) {
                 CustomGameRuleView(newGameRule: $viewModel.selectedGameRule,
-                                   alertShown: $alertShown,
-                                   activeAlert: $activeAlert,
+                                   showAlert: { alertType in
+                                        activeAlert = alertType
+                                        alertShown = true
+                                   },
                                    hideCurrent: { gameRuleNewShown = false })
             }
         }
@@ -56,13 +58,13 @@ struct GameView: View {
             switch activeAlert {
             case .gameReset:
                 return Alert(title: Text("Resetting Game"),
-                      message: Text("Are you sure you want to reset this game?"),
-                      primaryButton: .default(Text("Yes"), action: {viewModel.resetGame()}),
-                      secondaryButton: .cancel(Text("No")))
+                              message: Text("Are you sure you want to reset this game?"),
+                              primaryButton: .default(Text("Yes"), action: viewModel.resetGame),
+                              secondaryButton: .cancel(Text("No")))
             case .timeInvalid:
                 return Alert(title: Text("Time Invalid"),
-                      message: Text("Time should be more than Zero"),
-                      dismissButton: .cancel(Text("Ok")))
+                              message: Text("Time should be more than Zero"),
+                              dismissButton: .cancel(Text("Ok")))
             }
 
         }
@@ -77,13 +79,13 @@ private extension GameView {
                 viewModel.pause()
                 gameRuleSelectShown = true
             }) {
-                Image(systemName: "timer")
+                Image(systemName: ActionBarAssets.timer)
                     .font(.largeTitle)
                     .foregroundColor(.primary)
             }
             Spacer()
             Button(action: viewModel.isPlaying ? viewModel.pause:viewModel.play) {
-                Image(systemName: viewModel.isPlaying ? "pause":"play")
+                Image(systemName: viewModel.isPlaying ? ActionBarAssets.pause:ActionBarAssets.play)
                     .font(.largeTitle)
                     .foregroundColor(.primary)
             }
@@ -93,7 +95,7 @@ private extension GameView {
                 activeAlert = .gameReset
                 alertShown = true
             }) {
-                Image(systemName: "arrow.uturn.forward")
+                Image(systemName: ActionBarAssets.reset)
                     .font(.largeTitle)
                     .foregroundColor(.primary)
             }

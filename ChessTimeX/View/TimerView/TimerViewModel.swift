@@ -18,8 +18,8 @@ class TimerViewModel: ObservableObject {
         isTimerActive = state
     }
     
-    func setShowTime(_ showTime: String) {
-        playerShowTime = showTime
+    func setShowTime(_ timeSeconds: Int) {
+        playerShowTime = timeSeconds > 0 ? timeSeconds.timerString:"Finished"
     }
     
     func setNumberOfMoves(_ number: Int) {

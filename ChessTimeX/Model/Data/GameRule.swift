@@ -45,9 +45,9 @@ extension GameRule {
         }
         switch gameType {
         case .classic:
-            return "rectangle.3.group.fill"
+            return GameRuleAssets.classic
         case .hourglass:
-            return "hourglass.circle.fill"
+            return GameRuleAssets.hourglass
         }
     }
 }
