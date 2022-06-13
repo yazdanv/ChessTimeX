@@ -25,6 +25,9 @@ protocol GameProtocol {
     
     var secondPlayerTimer: GameTimerProtocol { get }
     var secondPlayerMoves: CurrentValueSubject<Int, Never> { get }
+    
+    func changingFromFirstToSecond()
+    func changingFromSecondToFirst()
 }
 
 extension GameProtocol {
@@ -104,15 +107,15 @@ extension GameProtocol {
         }
     }
     
+    func changingFromFirstToSecond() {}
+    
+    func changingFromSecondToFirst() {}
+    
     // Private Code
     
     private func changePlayState(_ playState: Bool) {
         let timer = self.isFirstPlayersTurn.value ? self.firstPlayerTimer:self.secondPlayerTimer
         (playState ? timer.startTimer:timer.stopTimer)()
     }
-    
-    private func changingFromFirstToSecond() {}
-    
-    private func changingFromSecondToFirst() {}
     
 }

@@ -23,7 +23,7 @@
 		E7977A3C28537D2A003C1870 /* DefaultGameRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A3B28537D2A003C1870 /* DefaultGameRule.swift */; };
 		E7977A3E2853930F003C1870 /* ClassicGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A3D2853930F003C1870 /* ClassicGame.swift */; };
 		E7977A402853952F003C1870 /* HourglassGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A3F2853952F003C1870 /* HourglassGame.swift */; };
-		E7977A45285395DD003C1870 /* IncrementTypeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A44285395DD003C1870 /* IncrementTypeProtocol.swift */; };
+		E7977A45285395DD003C1870 /* IncrementProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A44285395DD003C1870 /* IncrementProtocol.swift */; };
 		E7977A4A2853D96B003C1870 /* GameTimerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A492853D96B003C1870 /* GameTimerProtocol.swift */; };
 		E7977A4F285489C2003C1870 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A4E285489C2003C1870 /* TimerView.swift */; };
 		E7977A5128548B6F003C1870 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7977A5028548B6F003C1870 /* TimerViewModel.swift */; };
@@ -65,7 +65,7 @@
 		E7977A3B28537D2A003C1870 /* DefaultGameRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGameRule.swift; sourceTree = "<group>"; };
 		E7977A3D2853930F003C1870 /* ClassicGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicGame.swift; sourceTree = "<group>"; };
 		E7977A3F2853952F003C1870 /* HourglassGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourglassGame.swift; sourceTree = "<group>"; };
-		E7977A44285395DD003C1870 /* IncrementTypeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncrementTypeProtocol.swift; sourceTree = "<group>"; };
+		E7977A44285395DD003C1870 /* IncrementProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncrementProtocol.swift; sourceTree = "<group>"; };
 		E7977A492853D96B003C1870 /* GameTimerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimerProtocol.swift; sourceTree = "<group>"; };
 		E7977A4E285489C2003C1870 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		E7977A5028548B6F003C1870 /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewModel.swift; sourceTree = "<group>"; };
@@ -214,7 +214,7 @@
 			children = (
 				E7977A492853D96B003C1870 /* GameTimerProtocol.swift */,
 				E7977A12285292C4003C1870 /* GameProtocol.swift */,
-				E7977A44285395DD003C1870 /* IncrementTypeProtocol.swift */,
+				E7977A44285395DD003C1870 /* IncrementProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -338,7 +338,7 @@
 				E7977A5F2856002C003C1870 /* Disposables.swift in Sources */,
 				E7977A4A2853D96B003C1870 /* GameTimerProtocol.swift in Sources */,
 				E7977A4F285489C2003C1870 /* TimerView.swift in Sources */,
-				E7977A45285395DD003C1870 /* IncrementTypeProtocol.swift in Sources */,
+				E7977A45285395DD003C1870 /* IncrementProtocol.swift in Sources */,
 				E7977A1128527F08003C1870 /* GameTimer.swift in Sources */,
 				E796C2F728570B0A00B71EE7 /* GameViewActiveAlert.swift in Sources */,
 				E7977A3A28537BD2003C1870 /* SecondsToTimerExtension.swift in Sources */,

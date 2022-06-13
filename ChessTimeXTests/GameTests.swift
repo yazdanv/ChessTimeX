@@ -20,6 +20,20 @@ class GameTests: XCTestCase {
                                   incrementType: .none,
                                   incrementSeconds: 0)
     
+    let sampleGameRule10Fisher = GameRule(name: "",
+                                  gameType: .classic,
+                                  firstPlayerSeconds: 300,
+                                  secondPlayerSeconds: 300,
+                                  incrementType: .fisher,
+                                  incrementSeconds: 10)
+    
+    let sampleGameRuleHourglass = GameRule(name: "",
+                                  gameType: .hourglass,
+                                  firstPlayerSeconds: 300,
+                                  secondPlayerSeconds: 300,
+                                  incrementType: .none,
+                                  incrementSeconds: 0)
+    
     override func setUp() {
         super.setUp()
         disposables = []
@@ -63,6 +77,35 @@ class GameTests: XCTestCase {
         testPublisherTillMatch(game.secondPlayerSeconds,
                                assertMessage: "Second player time not decreased",
                                runBeforeWait: game.changeToSecondPlayer) {$0 < secondPlayerSeconds}
+    }
+
+    func testPlayerTimersIncreaseFisherTimeProperly() throws {
+        let game = SampleGameWithIncrement(gameRule: sampleGameRule10Fisher)
+        let firstPlayerSeconds = sampleGameRule10Fisher.firstPlayerSeconds
+        let secondPlayerSeconds = sampleGameRule10Fisher.secondPlayerSeconds
+        
+        game.play()
+        testPublisherTillMatch(game.firstPlayerSeconds,
+                               assertMessage: "First player time not increased",
+                               runBeforeWait: game.changeToSecondPlayer) {$0 > firstPlayerSeconds}
+        testPublisherTillMatch(game.secondPlayerSeconds,
+                               assertMessage: "Second player time not increased",
+                               runBeforeWait: game.changeToFirstPlayer) {$0 > secondPlayerSeconds}
+    }
+    
+    func testPlayerTimersIncreaseHourglassTimeProperly() throws {
+        let game = HourglassGame(gameRule: sampleGameRule)
+        
+        
+        let firstPlayerSeconds = game.firstPlayerSeconds.value
+        game.play()
+        testPublisherTillMatch(game.firstPlayerSeconds,
+                               assertMessage: "First player time not increased",
+                               runBeforeWait: game.changeToSecondPlayer) {$0 > firstPlayerSeconds}
+        let secondPlayerSeconds = game.secondPlayerSeconds.value
+        testPublisherTillMatch(game.secondPlayerSeconds,
+                               assertMessage: "Second player time not increased",
+                               runBeforeWait: game.changeToFirstPlayer) {$0 > secondPlayerSeconds}
     }
 
 }

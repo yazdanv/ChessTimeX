@@ -52,6 +52,13 @@ struct DefaultGameRule {
                 secondPlayerSeconds: 5 * 60,
                 incrementType: IncrementType.none,
                 incrementSeconds: 0
+       ),
+        GameRule(name: "",
+                gameType: GameType.hourglass,
+                firstPlayerSeconds: 5 * 60,
+                secondPlayerSeconds: 5 * 60,
+                incrementType: IncrementType.fisher,
+                incrementSeconds: 5
        )
     ]
     

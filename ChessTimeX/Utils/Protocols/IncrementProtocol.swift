@@ -1,5 +1,5 @@
 //
-//  IncrementTypeProtocol.swift
+//  IncrementProtocol.swift
 //  ChessTimeX
 //
 //  Created by Yazdan on 6/10/22.
@@ -7,9 +7,9 @@
 
 import Foundation
 
-protocol IncrementTypeProtocol {}
+protocol IncrementProtocol {}
 
-extension IncrementTypeProtocol where Self: GameProtocol {
+extension IncrementProtocol where Self: GameProtocol {
     
     func addTimeIfNeeded(_ stoppingTimer: GameTimerProtocol) {
         var increment = 0

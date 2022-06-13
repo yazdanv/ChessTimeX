@@ -38,7 +38,7 @@ struct GameRuleListView: View {
                     Rectangle()
                         .background(.gray)
                         .frame(width: 0.5, height: 30)
-                    Button("New Custom Game") {
+                    Button("Custom Game") {
                         hideCurrent()
                         showNewRule()
                     }

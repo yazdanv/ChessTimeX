@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 
-struct HourglassGame: GameProtocol, IncrementTypeProtocol {
+struct HourglassGame: GameProtocol, IncrementProtocol {
     let rule: GameRule
     let disposables = Disposables()
     

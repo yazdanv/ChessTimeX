@@ -30,3 +30,25 @@ struct SampleGameWithoutIncrement: GameProtocol {
         secondPlayerTimer = GameTimer(seconds: rule.secondPlayerSeconds)
     }
 }
+
+struct SampleGameWithIncrement: GameProtocol, IncrementProtocol {
+    
+    let rule: GameRule
+    let disposables = Disposables()
+    
+    let isPlaying = CurrentValueSubject<Bool, Never>(false)
+    let isFirstPlayersTurn = CurrentValueSubject<Bool, Never>(true)
+    
+    let firstPlayerTimer: GameTimerProtocol
+    let firstPlayerMoves = CurrentValueSubject<Int, Never>(0)
+    
+    let secondPlayerTimer: GameTimerProtocol
+    let secondPlayerMoves = CurrentValueSubject<Int, Never>(0)
+    
+    init(gameRule: GameRule) {
+        rule = gameRule
+        
+        firstPlayerTimer = GameTimer(seconds: rule.firstPlayerSeconds)
+        secondPlayerTimer = GameTimer(seconds: rule.secondPlayerSeconds)
+    }
+}

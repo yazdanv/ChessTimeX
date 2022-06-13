@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-struct ClassicGame: GameProtocol, IncrementTypeProtocol {
+struct ClassicGame: GameProtocol, IncrementProtocol {
     let rule: GameRule
     let disposables = Disposables()
     
