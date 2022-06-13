@@ -11,13 +11,14 @@ import SwiftUI
 struct CustomGameRuleView: View {
     
     @Binding var newGameRule: GameRule?
-    @Binding var valueCheckPresented: Bool
+    @Binding var alertShown: Bool
+    @Binding var activeAlert: GameViewActiveAlert
     let hideCurrent: (() -> Void)
     
     @State var name: String = ""
     @State var gameType: GameType = .classic
-    @State var firstPlayerSeconds: Int = 300
-    @State var secondPlayerSeconds: Int = 300
+    @State var firstPlayerSeconds: Int = 0
+    @State var secondPlayerSeconds: Int = 0
     @State var secondPlayerSameAsFirst: Bool = true
     @State var incrementType: IncrementType = .none
     @State var incrementSeconds: Int = 0
@@ -71,8 +72,11 @@ struct CustomGameRuleView: View {
                             .background(.gray)
                             .frame(width: 0.5, height: 30)
                         Button("Create") {
-                            if (firstPlayerSeconds == 0 || secondPlayerSeconds == 0 && !secondPlayerSameAsFirst) {
-                                valueCheckPresented = true
+                            if (firstPlayerSeconds == 0
+                                || secondPlayerSeconds == 0 && !secondPlayerSameAsFirst
+                                || incrementSeconds == 0 && incrementType != .none) {
+                                activeAlert = .timeInvalid
+                                alertShown = true
                             } else {
                                 newGameRule = GameRule(name: name, gameType: gameType,
                                                        firstPlayerSeconds: firstPlayerSeconds,

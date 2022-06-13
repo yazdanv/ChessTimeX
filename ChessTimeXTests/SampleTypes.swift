@@ -18,7 +18,10 @@ struct SampleGameWithoutIncrement: GameProtocol {
     let isFirstPlayersTurn = CurrentValueSubject<Bool, Never>(true)
     
     let firstPlayerTimer: GameTimerProtocol
+    let firstPlayerMoves = CurrentValueSubject<Int, Never>(0)
+    
     let secondPlayerTimer: GameTimerProtocol
+    let secondPlayerMoves = CurrentValueSubject<Int, Never>(0)
     
     init(gameRule: GameRule) {
         rule = gameRule

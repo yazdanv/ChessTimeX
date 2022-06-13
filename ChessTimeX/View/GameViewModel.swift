@@ -75,17 +75,12 @@ class GameViewModel: ObservableObject {
             .sink { [weak self] isPlaying in
                 self?.isPlaying = isPlaying
             }.store(in: &disposables)
+        
         game.firstTimerActive
             .receive(on: DispatchQueue.main)
             .removeDuplicates()
             .sink { [weak self] isActive in
                 self?.firstPlayerState.updateActiveState(isActive)
-            }.store(in: &disposables)
-        game.secondTimerActive
-            .receive(on: DispatchQueue.main)
-            .removeDuplicates()
-            .sink { [weak self] isActive in
-                self?.secondPlayerState.updateActiveState(isActive)
             }.store(in: &disposables)
         game.firstPlayerSeconds
             .receive(on: DispatchQueue.main)
@@ -94,12 +89,31 @@ class GameViewModel: ObservableObject {
             .sink { [weak self] timeString in
                 self?.firstPlayerState.setShowTime(timeString)
             }.store(in: &disposables)
+        game.firstPlayerNoOfMoves
+            .receive(on: DispatchQueue.main)
+            .removeDuplicates()
+            .sink { [weak self] noOfMoves in
+                self?.firstPlayerState.setNumberOfMoves(noOfMoves)
+            }.store(in: &disposables)
+        
+        game.secondTimerActive
+            .receive(on: DispatchQueue.main)
+            .removeDuplicates()
+            .sink { [weak self] isActive in
+                self?.secondPlayerState.updateActiveState(isActive)
+            }.store(in: &disposables)
         game.secondPlayerSeconds
             .receive(on: DispatchQueue.main)
             .removeDuplicates()
             .map { $0 > 0 ? $0.timerString:"Player 2 Time Finished" }
             .sink { [weak self] timeString in
                 self?.secondPlayerState.setShowTime(timeString)
+            }.store(in: &disposables)
+        game.secondPlayerNoOfMoves
+            .receive(on: DispatchQueue.main)
+            .removeDuplicates()
+            .sink { [weak self] noOfMoves in
+                self?.secondPlayerState.setNumberOfMoves(noOfMoves)
             }.store(in: &disposables)
     }
 

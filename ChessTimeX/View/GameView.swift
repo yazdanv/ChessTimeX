@@ -12,8 +12,9 @@ struct GameView: View {
     
     @State private var gameRuleSelectShown: Bool = false
     @State private var gameRuleNewShown: Bool = false
-    @State private var resetGameAlertShown: Bool = false
-    @State private var valueCheckPresented: Bool = false
+    
+    @State private var alertShown: Bool = false
+    @State private var activeAlert: GameViewActiveAlert = .gameReset
     
     init() {
         viewModel = GameViewModel()
@@ -42,7 +43,8 @@ struct GameView: View {
             }
             if (gameRuleNewShown) {
                 CustomGameRuleView(newGameRule: $viewModel.selectedGameRule,
-                                   valueCheckPresented: $valueCheckPresented,
+                                   alertShown: $alertShown,
+                                   activeAlert: $activeAlert,
                                    hideCurrent: { gameRuleNewShown = false })
             }
         }
@@ -50,16 +52,19 @@ struct GameView: View {
             gameRuleSelectShown = false
             gameRuleNewShown = false
         })
-        .alert(isPresented: $resetGameAlertShown) {
-            Alert(title: Text("Resetting Game"),
-                  message: Text("Are you sure you want to reset this game?"),
-                  primaryButton: .default(Text("Yes"), action: {viewModel.resetGame()}),
-                  secondaryButton: .cancel(Text("No")))
-        }
-        .alert(isPresented: $valueCheckPresented) {
-            Alert(title: Text("Time Invalid"),
-                  message: Text("Time should be more than Zero"),
-                  dismissButton: .cancel(Text("Ok")))
+        .alert(isPresented: $alertShown) {
+            switch activeAlert {
+            case .gameReset:
+                return Alert(title: Text("Resetting Game"),
+                      message: Text("Are you sure you want to reset this game?"),
+                      primaryButton: .default(Text("Yes"), action: {viewModel.resetGame()}),
+                      secondaryButton: .cancel(Text("No")))
+            case .timeInvalid:
+                return Alert(title: Text("Time Invalid"),
+                      message: Text("Time should be more than Zero"),
+                      dismissButton: .cancel(Text("Ok")))
+            }
+
         }
     }
 }
@@ -67,6 +72,7 @@ struct GameView: View {
 private extension GameView {
     var actionBar: some View {
         return HStack(alignment: .center) {
+            Spacer()
             Button(action: {
                 viewModel.pause()
                 gameRuleSelectShown = true
@@ -75,19 +81,23 @@ private extension GameView {
                     .font(.largeTitle)
                     .foregroundColor(.primary)
             }
+            Spacer()
             Button(action: viewModel.isPlaying ? viewModel.pause:viewModel.play) {
                 Image(systemName: viewModel.isPlaying ? "pause":"play")
                     .font(.largeTitle)
                     .foregroundColor(.primary)
             }
+            Spacer()
             Button(action: {
                 viewModel.pause()
-                resetGameAlertShown = true
+                activeAlert = .gameReset
+                alertShown = true
             }) {
                 Image(systemName: "arrow.uturn.forward")
                     .font(.largeTitle)
                     .foregroundColor(.primary)
             }
+            Spacer()
         }.padding(12)
     }
 }

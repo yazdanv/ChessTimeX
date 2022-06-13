@@ -29,7 +29,7 @@ struct DurationPickerView: View {
     
     
     @State var seconds: Int = 0
-    @State var minutes: Int = 5
+    @State var minutes: Int = 0
     @State var hours: Int = 0
     
     func buildDatePickerWheel(label: String, selection: Binding<Int>) -> some View {
