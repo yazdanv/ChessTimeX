@@ -32,6 +32,7 @@ struct HourglassGame: GameProtocol, IncrementProtocol {
     }
     
     private func setObservers() {
+        // Adding one second to the other player when the player uses one second
         self.firstPlayerSeconds
             .receive(on: DispatchQueue.global())
             .sink { _ in

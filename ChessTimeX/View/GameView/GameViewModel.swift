@@ -65,7 +65,7 @@ class GameViewModel: ObservableObject {
         selectedGameRule = DefaultGameRule.defaultRule
     }
 
-    // Binding the model publishers to view publishers rather than using the game object
+    // Binding the model publishers to view publishers rather than using the game struct
     //   publishers directly inside view, to make sure model side and view side are only
     //   attached using view model and therefore completly detachable
     func bindPublishers() {

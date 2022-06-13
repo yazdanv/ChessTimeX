@@ -11,6 +11,7 @@ protocol IncrementProtocol {}
 
 extension IncrementProtocol where Self: GameProtocol {
     
+    // TODO: should handle delay increment type in future
     func addTimeIfNeeded(_ stoppingTimer: GameTimerProtocol) {
         var increment = 0
         switch rule.incrementType {
@@ -24,6 +25,7 @@ extension IncrementProtocol where Self: GameProtocol {
         }
     }
     
+    // MARK: implementing methods from GameProtocol
     func changingFromFirstToSecond() {
         addTimeIfNeeded(self.firstPlayerTimer)
     }

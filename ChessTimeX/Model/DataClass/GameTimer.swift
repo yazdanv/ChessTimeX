@@ -21,6 +21,7 @@ struct GameTimer: GameTimerProtocol {
         timer = Timer.publish(every: 1, on: .main, in: .common)
     }
     
+    // MARK: internal private functionality
     private func attachTimer() {
         timer?.autoconnect().sink {_ in
             if (self.timeSeconds.value > 0) {
@@ -36,6 +37,7 @@ struct GameTimer: GameTimerProtocol {
         timer?.connect().cancel()
     }
     
+    // MARK: Public facing functionality
     func incrementTime(seconds: Int) {
         let timeSecondsValue = timeSeconds.value
         timeSeconds.send(timeSecondsValue + seconds)
@@ -47,6 +49,7 @@ struct GameTimer: GameTimerProtocol {
             isRunning.send(true)
         }
     }
+    
     
     func stopTimer() {
         if (isRunning.value) {
