@@ -96,6 +96,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E796C2F828571A2E00B71EE7 /* TimerView */ = {
+			isa = PBXGroup;
+			children = (
+				E7977A4E285489C2003C1870 /* TimerView.swift */,
+				E7977A5028548B6F003C1870 /* TimerViewModel.swift */,
+			);
+			path = TimerView;
+			sourceTree = "<group>";
+		};
+		E796C2F928571A3F00B71EE7 /* GameView */ = {
+			isa = PBXGroup;
+			children = (
+				E79779D328527768003C1870 /* GameView.swift */,
+				E7977A0328527BD4003C1870 /* GameViewModel.swift */,
+			);
+			path = GameView;
+			sourceTree = "<group>";
+		};
+		E796C2FA28571A4A00B71EE7 /* GameViewPopups */ = {
+			isa = PBXGroup;
+			children = (
+				E7977A542854CD5F003C1870 /* GameRuleListView.swift */,
+				E7977A5A2855D61B003C1870 /* CustomGameRuleView.swift */,
+				E7977A5C2855D659003C1870 /* DurationPickerView.swift */,
+				E7977A582855CC6B003C1870 /* DurationWheelPicker.swift */,
+			);
+			path = GameViewPopups;
+			sourceTree = "<group>";
+		};
 		E79779C528527768003C1870 = {
 			isa = PBXGroup;
 			children = (
@@ -148,14 +177,9 @@
 		E79779FB28527783003C1870 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				E79779D328527768003C1870 /* GameView.swift */,
-				E7977A0328527BD4003C1870 /* GameViewModel.swift */,
-				E7977A4E285489C2003C1870 /* TimerView.swift */,
-				E7977A5028548B6F003C1870 /* TimerViewModel.swift */,
-				E7977A542854CD5F003C1870 /* GameRuleListView.swift */,
-				E7977A5A2855D61B003C1870 /* CustomGameRuleView.swift */,
-				E7977A5C2855D659003C1870 /* DurationPickerView.swift */,
-				E7977A582855CC6B003C1870 /* DurationWheelPicker.swift */,
+				E796C2F828571A2E00B71EE7 /* TimerView */,
+				E796C2F928571A3F00B71EE7 /* GameView */,
+				E796C2FA28571A4A00B71EE7 /* GameViewPopups */,
 			);
 			path = View;
 			sourceTree = "<group>";
