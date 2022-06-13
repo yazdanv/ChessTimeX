@@ -6,8 +6,92 @@ It supports Classic and Hourglass game modes and for increment type it only supp
 
 
 ## Working principle:
-The main view is View->GameView->GameView.swift which includes two timer views (View->TimerView->TimerView.swift) TimerView uses a timer viewModel object (View->TimerView-TimerViewModel.swift) which includes playerShowTime (the time player has left), isTimerActive (whether the TimerView should be in active or inactive state) and numberOfMoves (the total number of moves the player has taken) which this TimerViewModel is provided by GameViewModel (View->GameView->GameViewModel.swift), GameViewModel manages the interactions between GameView and GameProtocol based structs, there is currently two game types each with it's own struct and both following GameProtocol (Utils->Protocols->GameProtocol.swift).
-Each GameProtocol instance uses GameTimerProtocol (Utils->Protocols->GameTimerProtocol.swift) based structs to manage each players remaining time and passes the seconds value subjects to the viewModel side using two computed variables (firstPlayerSeconds, secondPlayerSeconds) when the time ticks GameViewModel would receive a value in it's subscription to playerSeconds values which in turn would update the TimeViewModel to update each playerShowTime accordingly.
+The main view is View->GameView->GameView.swift
+```swift
+struct GameView: View {
+//...
+}
+```
+which includes two timer views (View->TimerView->TimerView.swift) 
+```swift
+struct TimerView: View {
+//...
+}
+```
+TimerView uses a timer viewModel object (View->TimerView-TimerViewModel.swift) which includes playerShowTime (the time player has left), isTimerActive (whether the TimerView should be in active or inactive state) and numberOfMoves (the total number of moves the player has taken)
+```swift
+class TimerViewModel: ObservableObject {
+    @Published var playerShowTime = "00:05:00"
+    @Published var isTimerActive = false
+    @Published var numberOfMoves = 0
+    //...
+}
+```
+which this TimerViewModel is provided by GameViewModel (View->GameView->GameViewModel.swift), GameViewModel manages the interactions between GameView and GameProtocol based structs,
+```swift
+class GameViewModel: ObservableObject {
+    var game: GameProtocol!
+    //...
+    func setGame(gameRule: GameRule) {
+        //...
+    }
+    //...
+}
+```
+there is currently two game types each with it's own struct and both following GameProtocol (Utils->Protocols->GameProtocol.swift).
+```swift
+// Constants and methods that each game type should implement
+protocol GameProtocol {
+    var rule: GameRule { get }
+    var disposables: Disposables { get }
+    
+    var isPlaying: CurrentValueSubject<Bool, Never> { get }
+    var isFirstPlayersTurn: CurrentValueSubject<Bool, Never> { get }
+    
+    var firstPlayerTimer: GameTimerProtocol { get }
+    var firstPlayerMoves: CurrentValueSubject<Int, Never> { get }
+    
+    var secondPlayerTimer: GameTimerProtocol { get }
+    var secondPlayerMoves: CurrentValueSubject<Int, Never> { get }
+    
+    func changingFromFirstToSecond()
+    func changingFromSecondToFirst()
+}
+```
+Each GameProtocol instance uses GameTimerProtocol (Utils->Protocols->GameTimerProtocol.swift) based structs to manage each players remaining time and passes the seconds value subjects to the viewModel side using two computed variables (firstPlayerSeconds, secondPlayerSeconds)
+```swift
+    var firstPlayerSeconds: CurrentValueSubject<Int, Never> {
+        return firstPlayerTimer.timeSeconds
+    }
+    var secondPlayerSeconds: CurrentValueSubject<Int, Never> {
+        return secondPlayerTimer.timeSeconds
+    }
+```
+when the time ticks GameViewModel would receive a value in it's subscription to playerSeconds values which in turn would update the TimeViewModel to update each playerShowTime accordingly.
+```swift
+class GameViewModel: ObservableObject {
+    //...
+    func bindPublishers() {
+        //...
+        game.firstPlayerSeconds
+            .receive(on: DispatchQueue.main)
+            .removeDuplicates()
+            .map { $0 > 0 ? $0.timerString:"Player 1 Time Finished" }
+            .sink { [weak self] timeString in
+                self?.firstPlayerState.setShowTime(timeString)
+            }.store(in: &disposables)
+        //...
+        game.secondPlayerSeconds
+            .receive(on: DispatchQueue.main)
+            .removeDuplicates()
+            .map { $0 > 0 ? $0.timerString:"Player 2 Time Finished" }
+            .sink { [weak self] timeString in
+                self?.secondPlayerState.setShowTime(timeString)
+            }.store(in: &disposables)
+        //...
+     }
+}
+```
 GameProtocol also exposes methods for: play, pause, reset, changeToFirstPlayer, changeToSecondPlayer and values for player active state and number of moves
 
 
