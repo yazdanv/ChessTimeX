@@ -17,10 +17,5 @@ jobs:
         run: sudo xcode-select -switch /Applications/Xcode_13.3.app
       - name: iOS build setup
         run: >-
-          xcodebuild test -workspace TestApp.xcodeproj/project.xcworkspace
-          -scheme TestApp -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.4'
-      - name: testing ... iPhone 13
-        run: >-
-          xcodebuild test -workspace TestApp.xcodeproj/project.xcworkspace
-          -scheme TestApp -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.4'
+          xcodebuild test -workspace ChessTimeX.xcodeproj/project.xcworkspace -scheme ChessTimeXTests -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.4'
 
