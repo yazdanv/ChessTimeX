@@ -1,0 +1,17 @@
+name: iOS Test Workflow
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+    name: Build and Test using iPhone simulator
+    runs-on: macos-latest
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '13.3'
+      - uses: actions/checkout@v2
+      - run: xcodebuild test -workspace ChessTimeX.xcodeproj/project.xcworkspace -scheme ChessTimeXTests -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.4'
+
