@@ -93,7 +93,7 @@ extension GameProtocol {
     }
     
     func changeToFirstPlayer() {
-        if !firstPlayerTimer.isRunning.value && secondPlayerTimer.timeSeconds.value > 0 {
+        if isPlaying.value && !firstPlayerTimer.isRunning.value && secondPlayerTimer.timeSeconds.value > 0 {
             // Stop second player's timer and start the first player's
             // Also invoke changingFromSecondToFirst method so game types
             //   could implement custom functionality on user state change
@@ -110,7 +110,7 @@ extension GameProtocol {
     // This does exacly what changeToFirstPlayer does but the roles are reversed
     //   so for any further help read the comments from changeToFirstPlayer
     func changeToSecondPlayer() {
-        if !secondPlayerTimer.isRunning.value && firstPlayerTimer.timeSeconds.value > 0 {
+        if isPlaying.value && !secondPlayerTimer.isRunning.value && firstPlayerTimer.timeSeconds.value > 0 {
             firstPlayerTimer.stopTimer()
             changingFromFirstToSecond()
             secondPlayerTimer.startTimer()

@@ -51,8 +51,8 @@ struct DurationPickerView: View {
                     .padding(4)
                 Spacer()
                 if (sameAsFirstShow) {
-                    Picker("Same as First Player", selection: _sameAsFirst) {
-                        Text("Same as First Player").tag(true)
+                    Picker("Same as First", selection: _sameAsFirst) {
+                        Text("Same as First").tag(true)
                         Text("Choose").tag(false)
                     }.pickerStyle(.menu)
                 }

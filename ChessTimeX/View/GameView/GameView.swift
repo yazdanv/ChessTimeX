@@ -16,26 +16,40 @@ struct GameView: View {
     @State private var alertShown: Bool = false
     @State private var activeAlert: GameViewActiveAlert = .gameReset
     
+    @State private var orientation = UIDevice.current.orientation
+    
     init() {
         viewModel = GameViewModel()
     }
     
     var body: some View {
-        ZStack {
-            VStack(spacing: 0) {
-                TimerView(gameRule: viewModel.selectedGameRule,
-                          timerViewModel: viewModel.firstPlayerState,
-                          onTap: viewModel.firstPlayerTapped,
-                          rotation: 180
-                )
-                actionBar
-                TimerView(gameRule: viewModel.selectedGameRule,
-                          timerViewModel: viewModel.secondPlayerState,
-                          onTap: viewModel.secondPlayerTapped,
-                          rotation: 0
-                )
+        let vStackTimers = VStack(spacing: 0) {
+            TimerView(gameRule: viewModel.selectedGameRule,
+                      timerViewModel: viewModel.firstPlayerState,
+                      onTap: viewModel.firstPlayerTapped,
+                      rotation: 180
+            )
+            if (!orientation.isLandscape) {
+                horizontalActionBar
             }
-            .background(.ultraThinMaterial)
+            TimerView(gameRule: viewModel.selectedGameRule,
+                      timerViewModel: viewModel.secondPlayerState,
+                      onTap: viewModel.secondPlayerTapped,
+                      rotation: 0
+            )
+        }
+        ZStack {
+            if (orientation.isLandscape) {
+                HStack {
+                    vStackTimers
+                    verticalActionBar
+                }
+                .background(.ultraThinMaterial)
+            } else {
+                vStackTimers
+                    .background(.ultraThinMaterial)
+            }
+            
             if (gameRuleSelectShown) {
                 GameRuleListView(selectedGameRule: $viewModel.selectedGameRule,
                                  hideCurrent: { gameRuleSelectShown = false },
@@ -68,12 +82,25 @@ struct GameView: View {
             }
 
         }
+        .detectOrientation($orientation)
     }
 }
 
 private extension GameView {
-    var actionBar: some View {
-        return HStack(alignment: .center) {
+    var verticalActionBar: some View {
+        return VStack {
+            actionBarButtonGroup
+        }.padding(8)
+    }
+    
+    var horizontalActionBar: some View {
+        return HStack {
+            actionBarButtonGroup
+        }.padding(8)
+    }
+    
+    var actionBarButtonGroup: some View {
+        Group {
             Spacer()
             Button(action: {
                 viewModel.pause()
@@ -100,12 +127,13 @@ private extension GameView {
                     .foregroundColor(.primary)
             }
             Spacer()
-        }.padding(12)
+        }
     }
 }
 
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
         GameView()
+            .previewInterfaceOrientation(.portrait)
     }
 }

@@ -89,8 +89,8 @@ struct CustomGameRuleView: View {
                 }
             }
             .cornerRadius(10)
-            .frame(height: 600, alignment: .center)
-            .padding(EdgeInsets.init(top: 0, leading: 32, bottom: 0, trailing: 32))
+            .frame(maxWidth: 350, maxHeight: 600)
+            .padding(32)
         }
 
     }

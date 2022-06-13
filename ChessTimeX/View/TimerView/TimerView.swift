@@ -14,6 +14,7 @@ struct TimerView: View {
     let gameRule: GameRule?
     
     @ObservedObject var timerViewModel: TimerViewModel
+    @State private var orientation = UIDevice.current.orientation
     
     let onTap: () -> Void
     let rotation: Double
@@ -35,6 +36,9 @@ struct TimerView: View {
                         .foregroundColor(foregroundColor)
                     Text(gameRule?.incrementTitle ?? "").bold()
                         .foregroundColor(foregroundColor)
+                    if (orientation.isLandscape) {
+                        Spacer()
+                    }
                 }
                 Spacer()
             }
@@ -51,12 +55,13 @@ struct TimerView: View {
             }
             
             Text(timerViewModel.playerShowTime)
-                .font(.system(size: 80))
+                .font(.system(size: 74))
                 .foregroundColor(foregroundColor)
         }
             .onTapGesture(perform: onTap)
             .padding(12)
             .rotationEffect(.degrees(rotation))
+            .detectOrientation($orientation)
     }
     
 }
