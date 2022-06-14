@@ -27,7 +27,6 @@ struct CustomGameRuleView: View {
             Color(uiColor: .gray.withAlphaComponent(0.5))
                 .onTapGesture(perform: hideCurrent)
             ZStack {
-                Color.white
                 VStack {
                     Text("Create Custom Game Rule")
                         .font(.headline)
@@ -88,9 +87,10 @@ struct CustomGameRuleView: View {
                     .padding(8)
                 }
             }
+            .background(.bar)
             .cornerRadius(10)
             .frame(maxWidth: 350, maxHeight: 600)
-            .padding(32)
+            .padding(8)
         }
 
     }

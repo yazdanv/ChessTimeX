@@ -30,7 +30,7 @@ struct TimerView: View {
                 HStack {
                     Image(systemName: gameRule?.iconImage ?? "")
                         .foregroundColor(foregroundColor)
-                    Text(gameRule?.nameTitle ?? "").font(.title).bold()
+                    Text(gameRule?.nameTitle ?? "").font(.title2).bold()
                         .foregroundColor(foregroundColor)
                     Text("  |  ").bold()
                         .foregroundColor(foregroundColor)

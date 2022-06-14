@@ -46,7 +46,7 @@ struct GameRuleListView: View {
                 }
                 .padding(8)
             }
-            .background(.white)
+            .background(.bar)
             .cornerRadius(10)
             .padding(EdgeInsets.init(top: 48, leading: 16, bottom: 48, trailing: 16))
         }

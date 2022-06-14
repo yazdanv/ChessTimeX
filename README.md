@@ -76,17 +76,15 @@ class GameViewModel: ObservableObject {
         game.firstPlayerSeconds
             .receive(on: DispatchQueue.main)
             .removeDuplicates()
-            .map { $0 > 0 ? $0.timerString:"Player 1 Time Finished" }
-            .sink { [weak self] timeString in
-                self?.firstPlayerState.setShowTime(timeString)
+            .sink { [weak self] timeSeconds in
+                self?.firstPlayerState.setShowTime(timeSeconds)
             }.store(in: &disposables)
         //...
         game.secondPlayerSeconds
             .receive(on: DispatchQueue.main)
             .removeDuplicates()
-            .map { $0 > 0 ? $0.timerString:"Player 2 Time Finished" }
-            .sink { [weak self] timeString in
-                self?.secondPlayerState.setShowTime(timeString)
+            .sink { [weak self] timeSeconds in
+                self?.secondPlayerState.setShowTime(timeSeconds)
             }.store(in: &disposables)
         //...
      }
@@ -100,7 +98,7 @@ Other than following solid principles and basis of mvvm the codebase uses few gu
 1) the names used for each variable and method does exactly what it says it does and there is no short named or unrelated names which makes it easier to understand the functionality. ex:
 ```swift
     func changeToFirstPlayer() {
-        if !firstPlayerTimer.isRunning.value && secondPlayerTimer.timeSeconds.value > 0 {
+        if isPlaying.value && !firstPlayerTimer.isRunning.value && secondPlayerTimer.timeSeconds.value > 0 {
             // Stop second player's timer and start the first player's
             // Also invoke changingFromSecondToFirst method so game types
             //   could implement custom functionality on user state change
